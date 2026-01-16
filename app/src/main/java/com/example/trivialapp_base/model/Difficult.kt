@@ -4,7 +4,7 @@ data class Difficult (
     var difficulty: String,
     var timePerQuestion: Float,
     var questionsAmount: Int,
-    var questions: MutableList<Answer>
+    var questions: MutableList<Question>
 )
 
 object DifficultyProvider {
