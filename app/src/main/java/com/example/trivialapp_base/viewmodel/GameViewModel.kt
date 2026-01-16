@@ -7,14 +7,14 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.trivialapp_base.model.Pregunta
+import com.example.trivialapp_base.model.Question
 
 class GameViewModel : ViewModel() {
-    private var preguntasPartida: List<Pregunta> = emptyList()
+    private var preguntasPartida: List<Question> = emptyList()
     var indicePreguntaActual by mutableIntStateOf(0)
         private set
 
-    var preguntaActual by mutableStateOf<Pregunta?>(null)
+    var preguntaActual by mutableStateOf<Question?>(null)
         private set
 
     var respuestasMezcladas by mutableStateOf<List<String>>(emptyList())
@@ -28,7 +28,6 @@ class GameViewModel : ViewModel() {
 
     var juegoTerminado by mutableStateOf(false)
         private set
-
     var dificultadSeleccionada by mutableStateOf("Facil")
         private set
 
