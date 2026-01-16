@@ -12,7 +12,7 @@ import com.example.trivialapp_base.viewmodel.GameViewModel
 fun NavigationController(navController: NavController, viewModel: GameViewModel){
     NavHost(
         navController = navController as NavHostController,
-        startDestination = Routes.LaunchScreen.route
+        startDestination = Routes.MenuScreen.route
     ) {
         composable(Routes.LaunchScreen.route) { SplashScreen(navController) }
         composable(Routes.MenuScreen.route) { MenuScreen(navController, viewModel) }
