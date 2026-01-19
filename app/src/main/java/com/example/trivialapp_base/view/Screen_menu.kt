@@ -67,12 +67,12 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
                     )
                 )
                 .constrainAs(gameStart) {
-                    top.linkTo(image.top, margin = 20.dp)
+                    top.linkTo(image.bottom, margin = 20.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
         ){
-            Text("Start Game")
+            Text("Iniciar Partida")
         }
 
 
@@ -89,13 +89,13 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
                     )
                 )
                 .constrainAs(difficultyChanger) {
-                    top.linkTo(gameStart.top, margin = 20.dp)
+                    top.linkTo(gameStart.bottom, margin = 20.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
         ){
-            Text("Difficulty: " + viewModel.difficultySelected.difficulty)
-            DifficultyDialog(show, { show = false })
+            Text("DIFFICULTAT: " + viewModel.difficultySelected.difficulty)
+            if (show) DifficultyDialog(viewModel, show, { show = false })
         }
     }
 }
