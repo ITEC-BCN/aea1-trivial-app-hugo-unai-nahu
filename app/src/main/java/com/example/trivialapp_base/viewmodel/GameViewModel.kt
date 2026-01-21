@@ -10,13 +10,12 @@ import androidx.lifecycle.ViewModel
 import com.example.trivialapp_base.model.Difficult
 import com.example.trivialapp_base.model.DifficultyProvider
 import com.example.trivialapp_base.model.Question
-import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
     private var gameQuestions: MutableList<Question> = mutableListOf()
     var questionIndex by mutableIntStateOf(0)
         private set
-
+    var questionAnsered by mutableStateOf(false)
     var currentQuestion by mutableStateOf<Question>(Question("Pregunta de ejemplo", "Nada", listOf("Si", "No", "Talvez", "Solo el Martes"), "París"))
         private set
 
@@ -39,30 +38,38 @@ class GameViewModel : ViewModel() {
 
     fun setDifficulty(difficulty: Difficult) {
         difficultySelected = difficulty // Sense .value!
-        gameQuestions = difficulty.questions
     }
     fun startGame() {
         gameFinalized = false
+        gameQuestions = difficultySelected.questions
+        reloadQuestion()
     }
 
     private fun reloadQuestion() {
-        if (difficultySelected.questionsAmount < 0) {
-            gameQuestions.removeAt(questionIndex)
-            questionIndex = Random.nextInt(0,gameQuestions.lastIndex)
+        if (difficultySelected.questionsAmount > 0) {
+            questionIndex = (0 until gameQuestions.size).random()
             currentQuestion = gameQuestions[questionIndex]
-            difficultySelected.questionsAmount =- 1
+            mixAnswers()
+            gameQuestions.removeAt(questionIndex)
+            difficultySelected.questionsAmount --
         } else {
             gameFinalized = true
         }
     }
+    private fun mixAnswers(){
+        mixedAnswers = currentQuestion.answers.shuffled()
+    }
 
-    fun answerQuestion(userAnswer: String) {
-        if (userAnswer == currentQuestion.correctAnswer){
+    fun answerQuestion(answerIndex: Int) {
+        questionAnsered = true
+        if (mixedAnswers[answerIndex] == currentQuestion.correctAnswer){
             points ++
         }
     }
 
-    private fun continueRound() {
+    fun continueRound() {
+        questionAnsered = false
+        reloadQuestion()
     }
 
     private fun startTimer() {

@@ -58,6 +58,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
                     viewModel.startGame()
                     navController.navigate("Game")
                 }
+                .background(Color.Red)
                 .clip(
                     RoundedCornerShape(
                         topStart = 10.dp,
@@ -80,6 +81,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
         Box(
             modifier = Modifier
                 .clickable{ show = true }
+                .background(Color.Red)
                 .clip(
                     RoundedCornerShape(
                         topStart = 20.dp,
