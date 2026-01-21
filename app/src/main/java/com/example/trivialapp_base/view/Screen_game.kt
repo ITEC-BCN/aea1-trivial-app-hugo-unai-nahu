@@ -89,7 +89,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(0)
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(0)
                 }
                 .background(Color.LightGray)
                 .padding(10.dp)
@@ -110,7 +110,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(1)
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(1)
                 }
                 .background(Color.LightGray)
                 .padding(10.dp)
@@ -132,7 +132,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(2)
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(2)
                 }
                 .background(Color.LightGray)
                 .padding(10.dp)
@@ -154,7 +154,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(3)
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(3)
                 }
                 .background(Color.LightGray)
                 .padding(10.dp)
@@ -174,7 +174,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 }
         ){ Text(viewModel.mixedAnswers[3], textAlign = TextAlign.Center) }
 
-        if (viewModel.questionAnsered){
+        if (viewModel.questionAnswered){
             Box(
                 modifier = Modifier
                     .clickable{
