@@ -15,10 +15,10 @@ class GameViewModel : ViewModel() {
     private var gameQuestions: MutableList<Question> = mutableListOf()
     var questionIndex by mutableIntStateOf(0)
         private set
-    var questionAnsered by mutableStateOf(false)
+    var questionAnswered by mutableStateOf(false)
     var currentQuestion by mutableStateOf<Question>(Question("Pregunta de ejemplo", "Nada", listOf("Si", "No", "Talvez", "Solo el Martes"), "París"))
         private set
-
+    var remindingQuestionsToAnswer by mutableStateOf(0)
     var mixedAnswers by mutableStateOf<List<String>>(emptyList())
         private set
 
@@ -42,16 +42,17 @@ class GameViewModel : ViewModel() {
     fun startGame() {
         gameFinalized = false
         gameQuestions = difficultySelected.questions
+        remindingQuestionsToAnswer = difficultySelected.questionsAmount
         reloadQuestion()
     }
 
     private fun reloadQuestion() {
-        if (difficultySelected.questionsAmount > 0) {
+        if (remindingQuestionsToAnswer > 0) {
             questionIndex = (0 until gameQuestions.size).random()
             currentQuestion = gameQuestions[questionIndex]
             mixAnswers()
             gameQuestions.removeAt(questionIndex)
-            difficultySelected.questionsAmount --
+            remindingQuestionsToAnswer --
         } else {
             gameFinalized = true
         }
@@ -61,14 +62,14 @@ class GameViewModel : ViewModel() {
     }
 
     fun answerQuestion(answerIndex: Int) {
-        questionAnsered = true
+        questionAnswered = true
         if (mixedAnswers[answerIndex] == currentQuestion.correctAnswer){
             points ++
         }
     }
 
     fun continueRound() {
-        questionAnsered = false
+        questionAnswered = false
         reloadQuestion()
     }
 
