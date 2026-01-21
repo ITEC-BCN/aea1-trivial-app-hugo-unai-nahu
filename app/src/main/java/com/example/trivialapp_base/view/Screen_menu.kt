@@ -39,7 +39,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
         val (image, gameStart, difficultyChanger) = createRefs()
 
         Image(
-            painter = painterResource(id = R.drawable.funnyguy),
+            painter = painterResource(id = R.drawable.imagen1),
             contentDescription = "Menu Image",
             contentScale = ContentScale.Fit,
             modifier = Modifier

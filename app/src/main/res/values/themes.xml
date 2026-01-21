@@ -2,4 +2,5 @@
 <resources>
 
     <style name="Theme.TrivialAPP_Base" parent="android:Theme.Material.Light.NoActionBar" />
+
 </resources>
