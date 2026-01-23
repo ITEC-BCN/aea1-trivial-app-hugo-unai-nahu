@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
@@ -27,6 +28,7 @@ import com.example.trivialapp_base.R
 import com.example.trivialapp_base.ui.theme.Purple777
 import com.example.trivialapp_base.ui.theme.PurpleBack
 import com.example.trivialapp_base.ui.theme.PurpleFront
+import com.example.trivialapp_base.ui.theme.PurpleGrey80
 import com.example.trivialapp_base.viewmodel.GameViewModel
 
 @Composable
@@ -35,7 +37,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         painter = painterResource(id = R.drawable.gamebackground),
         contentDescription = "Background",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(PurpleGrey80).padding(horizontal = 10.dp)
     )
     ConstraintLayout(
         modifier = Modifier
@@ -45,8 +47,9 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
 
         Box(
             modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleBack)
-                .border(5.dp, Purple777)
+                .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                 .padding(20.dp)
                 .constrainAs(currentPoints){
                     top.linkTo(parent.top, margin = 50.dp)
@@ -93,8 +96,9 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
 
         Box(
             modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
-                .border(5.dp, Purple777)
+                .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                 .padding(20.dp)
                 .constrainAs(question){
                     top.linkTo(image.bottom, margin = 40.dp)
@@ -107,9 +111,10 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
 
         Box(
             modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
                 .size(height = 130.dp, width = 230.dp)
                 .background(PurpleBack)
-                .border(5.dp, Purple777)
+                .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                 .constrainAs(answersBox){
                     top.linkTo(question.bottom, margin = 20.dp)
                     start.linkTo(question.start)
@@ -122,6 +127,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 .clickable{
                     if (!viewModel.questionAnsered) viewModel.answerQuestion(0)
                 }
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
                 .clip( RoundedCornerShape(10.dp) )
@@ -129,13 +135,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     top.linkTo(answersBox.top, margin = 10.dp)
                     start.linkTo(answersBox.start, margin = 10.dp)
                 }
-        ){ Text(viewModel.mixedAnswers[0], textAlign = TextAlign.Center) }
+        ){ Text(viewModel.mixedAnswers[0], Modifier.align(
+            alignment = Alignment.Center
+        )) }
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
                     if (!viewModel.questionAnsered) viewModel.answerQuestion(1)
                 }
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
                 .clip( RoundedCornerShape(10.dp) )
@@ -144,13 +153,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     end.linkTo(answersBox.end, margin = 10.dp)
                     start.linkTo(firstAnswer.end, margin = 10.dp)
                 }
-        ){ Text(viewModel.mixedAnswers[1], textAlign = TextAlign.Center) }
+        ){ Text(viewModel.mixedAnswers[1], Modifier.align(
+            alignment = Alignment.Center
+        )) }
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
                     if (!viewModel.questionAnsered) viewModel.answerQuestion(2)
                 }
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
                 .clip( RoundedCornerShape(10.dp) )
@@ -159,13 +171,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     start.linkTo(answersBox.start, margin = 10.dp)
                     bottom.linkTo(answersBox.bottom, margin = 10.dp)
                 }
-        ){ Text(viewModel.mixedAnswers[2], textAlign = TextAlign.Center) }
+        ){ Text(viewModel.mixedAnswers[2], Modifier.align(
+            alignment = Alignment.Center
+        )) }
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable{
                     if (!viewModel.questionAnsered) viewModel.answerQuestion(3)
                 }
+                .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
                 .clip( RoundedCornerShape(10.dp) )
@@ -175,7 +190,9 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     end.linkTo(answersBox.end, margin = 10.dp)
                     bottom.linkTo(answersBox.bottom, margin = 10.dp)
                 }
-        ){ Text(viewModel.mixedAnswers[3], textAlign = TextAlign.Center) }
+        ){ Text(viewModel.mixedAnswers[3], Modifier.align(
+            alignment = Alignment.Center
+        )) }
 
         if (viewModel.questionAnsered){
             Box(
@@ -183,8 +200,9 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     .clickable{
                         viewModel.continueRound()
                     }
+                    .clip(RoundedCornerShape(20.dp))
                     .background(PurpleBack)
-                    .border(5.dp, Purple777)
+                    .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                     .padding(20.dp)
                     .constrainAs(correctAnswer){
                         top.linkTo(answersBox.bottom, margin = 30.dp)
