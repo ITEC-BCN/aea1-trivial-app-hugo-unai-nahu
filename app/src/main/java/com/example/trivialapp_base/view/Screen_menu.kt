@@ -3,101 +3,104 @@ package com.example.trivialapp_base.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivialapp_base.R
 import com.example.trivialapp_base.viewmodel.GameViewModel
 
 @Composable
 fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
-    val scrollState = rememberScrollState()
+    val lilaFondo = Color(0xFFF3E5F5) // Lila muy claro para el fondo
+    val lilaBotones = Color(0xFFB39DDB) // Lila para los botones
 
-    ConstraintLayout(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
-            .verticalScroll(scrollState)
-    ){
-        val (image, gameStart, difficultyChanger) = createRefs()
-
-        Image(
-            painter = painterResource(id = R.drawable.imagen1),
-            contentDescription = "Menu Image",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .size(100.dp)
-                .background(Color.Black)
-                .constrainAs(image) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom, margin = 30.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        )
+            .background(lilaFondo),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+    ) {
+        // Imagen con borde redondeado y fondo blanco
         Box(
             modifier = Modifier
-                .clickable{
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.White)
+                .padding(8.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.imagen1),
+                contentDescription = "Menu Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+        }
+
+        // Botón "Iniciar Partida"
+        Box(
+            modifier = Modifier
+                .clickable {
                     viewModel.startGame()
                     navController.navigate("Game")
                 }
-                .background(Color.Red)
-                .clip(
-                    RoundedCornerShape(
-                        topStart = 10.dp,
-                        topEnd = 20.dp,
-                        bottomStart = 20.dp,
-                        bottomEnd = 10.dp
-                    )
-                )
-                .constrainAs(gameStart) {
-                    top.linkTo(image.bottom, margin = 20.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        ){
-            Text("Iniciar Partida")
+                .clip(RoundedCornerShape(24.dp))
+                .background(lilaBotones)
+                .fillMaxWidth(0.8f)
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Iniciar Partida",
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
         }
 
-
+        // Botón "Dificultad"
         var show by remember { mutableStateOf(false) }
         Box(
             modifier = Modifier
-                .clickable{ show = true }
-                .background(Color.Red)
-                .clip(
-                    RoundedCornerShape(
-                        topStart = 20.dp,
-                        topEnd = 10.dp,
-                        bottomStart = 10.dp,
-                        bottomEnd = 20.dp
-                    )
-                )
-                .constrainAs(difficultyChanger) {
-                    top.linkTo(gameStart.bottom, margin = 20.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        ){
-            Text("DIFFICULTAT: " + viewModel.difficultySelected.difficulty)
-            if (show) DifficultyDialog(viewModel, show, { show = false })
+                .clickable { show = true }
+                .clip(RoundedCornerShape(24.dp))
+                .background(lilaBotones)
+                .fillMaxWidth(0.8f)
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "DIFICULTAD: ${viewModel.difficultySelected.difficulty}",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
         }
+        if (show) DifficultyDialog(viewModel, show, { show = false })
     }
 }
