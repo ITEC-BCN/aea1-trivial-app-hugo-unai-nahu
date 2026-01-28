@@ -15,10 +15,10 @@ class GameViewModel : ViewModel() {
     private var gameQuestions: MutableList<Question> = mutableListOf()
     var questionIndex by mutableIntStateOf(0)
         private set
-    var questionAnswered by mutableStateOf(false)
+    var questionAnsered by mutableStateOf(false)
     var currentQuestion by mutableStateOf<Question>(Question("Pregunta de ejemplo", "Nada", listOf("Si", "No", "Talvez", "Solo el Martes"), "París"))
         private set
-    var remindingQuestionsToAnswer by mutableStateOf(0)
+
     var mixedAnswers by mutableStateOf<List<String>>(emptyList())
         private set
 
@@ -34,25 +34,26 @@ class GameViewModel : ViewModel() {
         private set
 
     private var timer: CountDownTimer? = null
-    private val TIME_PER_QUESTION = 10000L // 10 segons
+    private var TIME_PER_QUESTION = 10000L // 10 segons
 
     fun setDifficulty(difficulty: Difficult) {
         difficultySelected = difficulty // Sense .value!
+        TIME_PER_QUESTION = difficulty.timePerQuestion
     }
     fun startGame() {
         gameFinalized = false
         gameQuestions = difficultySelected.questions
-        remindingQuestionsToAnswer = difficultySelected.questionsAmount
         reloadQuestion()
     }
 
     private fun reloadQuestion() {
-        if (remindingQuestionsToAnswer > 0) {
+        if (difficultySelected.questionsAmount > 0) {
             questionIndex = (0 until gameQuestions.size).random()
             currentQuestion = gameQuestions[questionIndex]
             mixAnswers()
             gameQuestions.removeAt(questionIndex)
-            remindingQuestionsToAnswer --
+            difficultySelected.questionsAmount --
+            startTimer()
         } else {
             gameFinalized = true
         }
@@ -61,21 +62,36 @@ class GameViewModel : ViewModel() {
         mixedAnswers = currentQuestion.answers.shuffled()
     }
 
-    fun answerQuestion(answerIndex: Int) {
-        questionAnswered = true
-        if (mixedAnswers[answerIndex] == currentQuestion.correctAnswer){
+    fun answerQuestion(answer: String) {
+        questionAnsered = true
+        if (answer == currentQuestion.correctAnswer){
             points ++
         }
+        timer?.cancel()
     }
 
     fun continueRound() {
-        questionAnswered = false
+        questionAnsered = false
         reloadQuestion()
     }
 
     private fun startTimer() {
+        timer?.cancel()
+        timer = object : CountDownTimer(TIME_PER_QUESTION, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                // Actualitzem l'estat directament
+                remindingTime = millisUntilFinished.toFloat() / TIME_PER_QUESTION
+            }
+
+            override fun onFinish() {
+                remindingTime = 0f
+                answerQuestion(" ")
+            }
+        }.start()
     }
 
     override fun onCleared() {
+        super.onCleared()
+        timer?.cancel()
     }
 }
