@@ -34,10 +34,11 @@ class GameViewModel : ViewModel() {
         private set
 
     private var timer: CountDownTimer? = null
-    private val TIME_PER_QUESTION = 10000L // 10 segons
+    private var TIME_PER_QUESTION = 10000L // 10 segons
 
     fun setDifficulty(difficulty: Difficult) {
         difficultySelected = difficulty // Sense .value!
+        TIME_PER_QUESTION = difficulty.timePerQuestion
     }
     fun startGame() {
         gameFinalized = false
@@ -52,6 +53,7 @@ class GameViewModel : ViewModel() {
             mixAnswers()
             gameQuestions.removeAt(questionIndex)
             difficultySelected.questionsAmount --
+            startTimer()
         } else {
             gameFinalized = true
         }
@@ -60,11 +62,12 @@ class GameViewModel : ViewModel() {
         mixedAnswers = currentQuestion.answers.shuffled()
     }
 
-    fun answerQuestion(answerIndex: Int) {
+    fun answerQuestion(answer: String) {
         questionAnsered = true
-        if (mixedAnswers[answerIndex] == currentQuestion.correctAnswer){
+        if (answer == currentQuestion.correctAnswer){
             points ++
         }
+        timer?.cancel()
     }
 
     fun continueRound() {
@@ -73,8 +76,22 @@ class GameViewModel : ViewModel() {
     }
 
     private fun startTimer() {
+        timer?.cancel()
+        timer = object : CountDownTimer(TIME_PER_QUESTION, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                // Actualitzem l'estat directament
+                remindingTime = millisUntilFinished.toFloat() / TIME_PER_QUESTION
+            }
+
+            override fun onFinish() {
+                remindingTime = 0f
+                answerQuestion(" ")
+            }
+        }.start()
     }
 
     override fun onCleared() {
+        super.onCleared()
+        timer?.cancel()
     }
 }

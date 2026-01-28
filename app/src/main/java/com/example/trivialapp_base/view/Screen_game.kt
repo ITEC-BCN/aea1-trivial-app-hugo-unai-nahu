@@ -37,7 +37,10 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         painter = painterResource(id = R.drawable.gamebackground),
         contentDescription = "Background",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.fillMaxSize().background(PurpleGrey80).padding(horizontal = 10.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(PurpleGrey80)
+            .padding(horizontal = 10.dp)
     )
     ConstraintLayout(
         modifier = Modifier
@@ -51,7 +54,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 .background(PurpleBack)
                 .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                 .padding(20.dp)
-                .constrainAs(currentPoints){
+                .constrainAs(currentPoints) {
                     top.linkTo(parent.top, margin = 50.dp)
                     end.linkTo(parent.end, margin = 50.dp)
                 }
@@ -60,22 +63,22 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         }
 
         LinearProgressIndicator(
-            //progress = { progressStatus },
-            modifier = Modifier
-                .padding(25.dp, 10.dp)
-                .height(25.dp)
-                .border(5.dp, Purple777, RoundedCornerShape(20.dp))
-                .width(500.dp)
-                .clip(RoundedCornerShape(20.dp) )
-                .constrainAs(timeBar){
-                    top.linkTo(currentPoints.bottom)
-                    bottom.linkTo(image.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-            color = PurpleFront,
-            trackColor = PurpleBack,
-            strokeCap = StrokeCap.Butt
+        progress = { 1f - viewModel.remindingTime },
+        modifier = Modifier
+                        .padding(25.dp, 10.dp)
+                        .height(25.dp)
+                        .border(5.dp, Purple777, RoundedCornerShape(20.dp))
+                        .width(500.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .constrainAs(timeBar) {
+                            top.linkTo(currentPoints.bottom)
+                            bottom.linkTo(image.top)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+        color = PurpleFront,
+        trackColor = PurpleBack,
+        strokeCap = StrokeCap.Butt,
         )
 
         Image(
@@ -100,7 +103,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 .background(PurpleFront)
                 .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                 .padding(20.dp)
-                .constrainAs(question){
+                .constrainAs(question) {
                     top.linkTo(image.bottom, margin = 40.dp)
                     start.linkTo(image.start)
                     end.linkTo(image.end)
@@ -115,7 +118,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 .size(height = 130.dp, width = 230.dp)
                 .background(PurpleBack)
                 .border(5.dp, Purple777, RoundedCornerShape(20.dp))
-                .constrainAs(answersBox){
+                .constrainAs(answersBox) {
                     top.linkTo(question.bottom, margin = 20.dp)
                     start.linkTo(question.start)
                     end.linkTo(question.end)
@@ -124,14 +127,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
-                .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(0)
+                .clickable {
+                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                        viewModel.mixedAnswers[0]
+                    )
                 }
                 .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
-                .clip( RoundedCornerShape(10.dp) )
-                .constrainAs(firstAnswer){
+                .clip(RoundedCornerShape(10.dp))
+                .constrainAs(firstAnswer) {
                     top.linkTo(answersBox.top, margin = 10.dp)
                     start.linkTo(answersBox.start, margin = 10.dp)
                 }
@@ -141,14 +146,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
-                .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(1)
+                .clickable {
+                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                        viewModel.mixedAnswers[1]
+                    )
                 }
                 .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
-                .clip( RoundedCornerShape(10.dp) )
-                .constrainAs(secondAnswer){
+                .clip(RoundedCornerShape(10.dp))
+                .constrainAs(secondAnswer) {
                     top.linkTo(answersBox.top, margin = 10.dp)
                     end.linkTo(answersBox.end, margin = 10.dp)
                     start.linkTo(firstAnswer.end, margin = 10.dp)
@@ -159,14 +166,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
-                .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(2)
+                .clickable {
+                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                        viewModel.mixedAnswers[2]
+                    )
                 }
                 .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
-                .clip( RoundedCornerShape(10.dp) )
-                .constrainAs(thirdAnswer){
+                .clip(RoundedCornerShape(10.dp))
+                .constrainAs(thirdAnswer) {
                     top.linkTo(firstAnswer.bottom, margin = 10.dp)
                     start.linkTo(answersBox.start, margin = 10.dp)
                     bottom.linkTo(answersBox.bottom, margin = 10.dp)
@@ -177,14 +186,16 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         Box(
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
-                .clickable{
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(3)
+                .clickable {
+                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                        viewModel.mixedAnswers[3]
+                    )
                 }
                 .clip(RoundedCornerShape(20.dp))
                 .background(PurpleFront)
                 .padding(10.dp)
-                .clip( RoundedCornerShape(10.dp) )
-                .constrainAs(fourthAnswer){
+                .clip(RoundedCornerShape(10.dp))
+                .constrainAs(fourthAnswer) {
                     top.linkTo(secondAnswer.bottom, margin = 10.dp)
                     start.linkTo(thirdAnswer.end, margin = 10.dp)
                     end.linkTo(answersBox.end, margin = 10.dp)
@@ -197,14 +208,14 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         if (viewModel.questionAnsered){
             Box(
                 modifier = Modifier
-                    .clickable{
+                    .clickable {
                         viewModel.continueRound()
                     }
                     .clip(RoundedCornerShape(20.dp))
                     .background(PurpleBack)
                     .border(5.dp, Purple777, RoundedCornerShape(20.dp))
                     .padding(20.dp)
-                    .constrainAs(correctAnswer){
+                    .constrainAs(correctAnswer) {
                         top.linkTo(answersBox.bottom, margin = 30.dp)
                         start.linkTo(answersBox.start)
                         end.linkTo(answersBox.end)

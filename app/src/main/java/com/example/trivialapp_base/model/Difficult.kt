@@ -2,7 +2,7 @@ package com.example.trivialapp_base.model
 
 data class Difficult (
     var difficulty: String,
-    var timePerQuestion: Float,
+    var timePerQuestion: Long,
     var questionsAmount: Int,
     var questions: MutableList<Question>
 )
@@ -11,7 +11,7 @@ object DifficultyProvider {
     fun easy(): Difficult{
         return Difficult(
             "Facil",
-            100f,
+            10000L,
             5,
             QuestionProvider.easyQuestions()
         )
@@ -20,7 +20,7 @@ object DifficultyProvider {
     fun midl(): Difficult{
         return Difficult(
             "Mitja",
-            75f,
+            7500L,
             10,
             QuestionProvider.midlQuestions()
         )
@@ -29,7 +29,7 @@ object DifficultyProvider {
     fun hard(): Difficult{
         return Difficult(
             "Dificil",
-            50f,
+            5000L,
             15,
             QuestionProvider.hardQuestions()
         )
