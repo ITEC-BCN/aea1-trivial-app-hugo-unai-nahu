@@ -128,7 +128,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable {
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(
                         viewModel.mixedAnswers[0]
                     )
                 }
@@ -147,7 +147,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable {
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(
                         viewModel.mixedAnswers[1]
                     )
                 }
@@ -167,7 +167,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable {
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(
                         viewModel.mixedAnswers[2]
                     )
                 }
@@ -187,7 +187,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .size(height = 50.dp, width = 100.dp)
                 .clickable {
-                    if (!viewModel.questionAnsered) viewModel.answerQuestion(
+                    if (!viewModel.questionAnswered) viewModel.answerQuestion(
                         viewModel.mixedAnswers[3]
                     )
                 }
@@ -205,7 +205,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             alignment = Alignment.Center
         )) }
 
-        if (viewModel.questionAnsered){
+        if (viewModel.questionAnswered){
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))

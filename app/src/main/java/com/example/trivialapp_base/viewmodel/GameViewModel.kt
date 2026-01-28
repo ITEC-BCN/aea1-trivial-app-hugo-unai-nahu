@@ -15,7 +15,7 @@ class GameViewModel : ViewModel() {
     private var gameQuestions: MutableList<Question> = mutableListOf()
     var questionIndex by mutableIntStateOf(0)
         private set
-    var questionAnsered by mutableStateOf(false)
+    var questionAnswered by mutableStateOf(false)
     var currentQuestion by mutableStateOf<Question>(Question("Pregunta de ejemplo", "Nada", listOf("Si", "No", "Talvez", "Solo el Martes"), "París"))
         private set
 
@@ -32,7 +32,7 @@ class GameViewModel : ViewModel() {
         private set
     var difficultySelected by mutableStateOf(DifficultyProvider.easy())
         private set
-
+    private var questionAmount = 0
     private var timer: CountDownTimer? = null
     private var TIME_PER_QUESTION = 10000L // 10 segons
 
@@ -43,16 +43,17 @@ class GameViewModel : ViewModel() {
     fun startGame() {
         gameFinalized = false
         gameQuestions = difficultySelected.questions
+        questionAmount = difficultySelected.questionsAmount
         reloadQuestion()
     }
 
     private fun reloadQuestion() {
-        if (difficultySelected.questionsAmount > 0) {
+        if (questionAmount > 0) {
             questionIndex = (0 until gameQuestions.size).random()
             currentQuestion = gameQuestions[questionIndex]
             mixAnswers()
             gameQuestions.removeAt(questionIndex)
-            difficultySelected.questionsAmount --
+            questionAmount --
             startTimer()
         } else {
             gameFinalized = true
@@ -63,7 +64,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun answerQuestion(answer: String) {
-        questionAnsered = true
+        questionAnswered = true
         if (answer == currentQuestion.correctAnswer){
             points ++
         }
@@ -71,7 +72,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun continueRound() {
-        questionAnsered = false
+        questionAnswered = false
         reloadQuestion()
     }
 
