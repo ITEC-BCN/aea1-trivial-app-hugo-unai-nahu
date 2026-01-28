@@ -208,9 +208,6 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         if (viewModel.questionAnsered){
             Box(
                 modifier = Modifier
-                    .clickable {
-                        viewModel.continueRound()
-                    }
                     .clip(RoundedCornerShape(20.dp))
                     .background(PurpleBack)
                     .border(5.dp, Purple777, RoundedCornerShape(20.dp))
@@ -222,10 +219,11 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                     }
             ){
                 Text(
-                    "The correct answer was... \n ${viewModel.currentQuestion.correctAnswer}",
+                    "The correct answer was...\n${viewModel.currentQuestion.correctAnswer}\nPress any where to continue...",
                     textAlign =  TextAlign.Center
                 )
             }
+            Box( modifier = Modifier.fillMaxSize().clickable{ viewModel.continueRound() } )
         }
 
         if (viewModel.gameFinalized) navController.navigate("Result")
