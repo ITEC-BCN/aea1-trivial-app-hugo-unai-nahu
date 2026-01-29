@@ -1,6 +1,8 @@
 package com.example.trivialapp_base.ui.theme
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
@@ -15,3 +17,6 @@ val Pink40 = Color(0xFF7D5260)
 val PurpleBack = Color(0xFFEFC8F7)
 val PurpleFront = Color(0xFFB641FF)
 val Purple777 = Color(0xFF883EA9)
+val lilaFondo = Color(0xFFF3E5F5)
+val lilaAccent = Color(0xFFB39DDB)
+val cardShape = RoundedCornerShape(24.dp)
