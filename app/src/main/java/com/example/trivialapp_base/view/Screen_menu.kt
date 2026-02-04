@@ -51,7 +51,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel) {
                 .padding(8.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.imagen1),
+                painter = painterResource(id = R.drawable.images),
                 contentDescription = "Menu Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
